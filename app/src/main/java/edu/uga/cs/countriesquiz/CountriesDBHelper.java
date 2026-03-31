@@ -11,8 +11,7 @@ public class CountriesDBHelper extends SQLiteOpenHelper{
     private static final String DB_NAME = "countriesinfo.db";
     private static final int DB_VERSION = 1;
 
-    // Define all names (strings) for table and column names.
-    // This will be useful if we want to change these names later.
+    // Define all names for table and column names.
     public static final String TABLE_COUNTRIESINFO = "countriesinfo";
     public static final String COUNTRIESINFO_COLUMN_ID = "_id";
     public static final String COUNTRIESINFO_COLUMN_COUNTRY = "country";
@@ -23,9 +22,7 @@ public class CountriesDBHelper extends SQLiteOpenHelper{
     // This is a reference to the only instance for the helper.
     private static CountriesDBHelper helperInstance;
 
-    // A Create table SQL statement to create a table for job leads.
-    // Note that _id is an auto increment primary key, i.e. the database will
-    // automatically generate unique id values as keys.
+    // A Create table SQL statement to create a table for countries information.
     private static final String CREATE_JOBLEADS =
             "create table " + TABLE_COUNTRIESINFO + " ("
                     + COUNTRIESINFO_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -35,15 +32,10 @@ public class CountriesDBHelper extends SQLiteOpenHelper{
                     + COUNTRIESINFO_COLUMN_ABBREVIATION + " TEXT"
                     + ")";
 
-    // Note that the constructor is private!
-    // So, it can be called only from
-    // this class, in the getInstance method.
     private CountriesDBHelper( Context context ) {
         super( context, DB_NAME, null, DB_VERSION );
     }
 
-    // Access method to the single instance of the class.
-    // It is synchronized, so that only one thread can executes this method, at a time.
     public synchronized static CountriesDBHelper getInstance( Context context ) {
         // check if the instance already exists and if not, create the instance
         if( helperInstance == null ) {
@@ -61,8 +53,7 @@ public class CountriesDBHelper extends SQLiteOpenHelper{
     }
 
     // We should override onUpgrade method, which will be used to upgrade the database if
-    // its version (DB_VERSION) has changed.  This will be done automatically by Android
-    // if the version will be bumped up, as we modify the database schema.
+    // its version (DB_VERSION) has changed.
     @Override
     public void onUpgrade( SQLiteDatabase db, int oldVersion, int newVersion ) {
         db.execSQL( "drop table if exists " + TABLE_COUNTRIESINFO );
