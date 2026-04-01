@@ -6,7 +6,6 @@ import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import edu.uga.cs.countriesquiz.QuestionFragment;
 
-/*
 public class QuizPagerAdapter extends FragmentStateAdapter {
 
     public QuizPagerAdapter (FragmentManager fragmentManager, Lifecycle lifecycle) {
@@ -15,8 +14,13 @@ public class QuizPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public Fragment createFragment(int position){
+        return QuestionFragment
+                .newInstance( position );
+    }
 
-               // .newInstance( position );
+    @Override
+    public int getItemCount() {
+        return QuestionFragment
+                .getNumberOfVersions();
     }
 }
-*/
