@@ -91,6 +91,8 @@ public class Quiz {
     }
 
     public String toString() {
-        return id + ": " + date + " " + score + " " + num_answered;
+        return "Quiz " + id + "\n" +
+                "Taken on: " + date + "\n" +
+                "Result: " + score + " out of 6\n";
     }
 }

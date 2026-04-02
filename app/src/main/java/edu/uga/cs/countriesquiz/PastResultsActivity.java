@@ -3,6 +3,7 @@ package edu.uga.cs.countriesquiz;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.annotation.Nullable;
@@ -22,15 +23,19 @@ public class PastResultsActivity extends AppCompatActivity {
 
         listView = findViewById(R.id.listView);
 
-        new PastResultsDBReader(this).execute();
+        new PastResultsDBReader(this, listView).execute();
     }
 
     public static class PastResultsDBReader extends AsyncTask<Void, List<Quiz>> {
 
         private static final String DEBUG_TAG = "PastResultsDBReader";
         private QuizData quizData;
-        public PastResultsDBReader(Context context) {
+        private ListView listView;
+        private Context context;
+        public PastResultsDBReader(Context context, ListView lv) {
             quizData = new QuizData(context);
+            this.context = context;
+            this.listView = lv;
         }
 
         @Override
@@ -45,6 +50,12 @@ public class PastResultsActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(List<Quiz> quizzes) {
             Log.d(DEBUG_TAG, "Quiz saved: " + quizzes);
+            ArrayAdapter<Quiz> adapter = new ArrayAdapter<>(
+                    context,
+                    android.R.layout.simple_list_item_1,
+                    quizzes
+            );
+            listView.setAdapter(adapter);
         }
     }
 }
