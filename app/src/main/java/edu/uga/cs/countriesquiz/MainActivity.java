@@ -1,5 +1,6 @@
 package edu.uga.cs.countriesquiz;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        startQuiz = findViewById(R.id.button);
-        prevQuizzes = findViewById(R.id.button2);
+        startQuiz = findViewById(R.id.button2);
+        prevQuizzes = findViewById(R.id.button);
 
         try {
             data2 = new QuizData(this);
@@ -85,6 +86,11 @@ public class MainActivity extends AppCompatActivity {
                             "B) " + q.getCorrectCapital() + "\n" +
                             "C) " + q.getWrongCapitals().get(1));
                 }
+                if (v.getId() == R.id.button2) {
+                    Intent intent = new Intent(v.getContext(),
+                            QuizActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -94,6 +100,11 @@ public class MainActivity extends AppCompatActivity {
                 data2.open();
                 data2.getQuizzes();
                 data2.close();
+                if (v.getId() == R.id.button) {
+                    Intent intent = new Intent(v.getContext(),
+                            PastResultsActivity.class);
+                    startActivity(intent);
+                }
             }
         });
     }

@@ -2,17 +2,22 @@ package edu.uga.cs.countriesquiz;
 
 import android.util.Log;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Question {
+public class Question implements Serializable {
 
     private static final String DEBUG_TAG = "Question";
     private long id;
     private String country;
     private String correctCapital;
     private List<String> wrongCapitals;
+    private int selectedIndex;
+    private int correctIndex;
+    private List<String> answerChoices;
 
     // default constructor
     public Question() {
@@ -20,13 +25,25 @@ public class Question {
         this.country = null;
         this.correctCapital = null;
         this.wrongCapitals = null;
+        this.selectedIndex = -1;
+        this.answerChoices = new ArrayList<>();
+        this.correctIndex = -1;
+
     }
 
-    public Question(String country, String correctCapital, List<String> wrongCapitals) {
+    public Question(String country, String correctCapital, List<String> wrongCapitals, int selectedIndex) {
         this.id = -1;
         this.country = country;
         this.correctCapital = correctCapital;
         this.wrongCapitals = wrongCapitals;
+        this.selectedIndex = selectedIndex;
+        this.answerChoices = new ArrayList<>();
+        this.answerChoices.add(correctCapital);
+        if (wrongCapitals != null) {
+            this.answerChoices.addAll(wrongCapitals);
+        }
+        Collections.shuffle(answerChoices);
+        this.correctIndex = this.answerChoices.indexOf(correctCapital);
     }
 
     // Method to create 6 different questions with 2 incorrect answers
@@ -59,7 +76,7 @@ public class Question {
             incorrect.add(countries.get(index2).getCapital());
 
             // create the question and add it to the list
-            Question question = new Question(country, capital, incorrect);
+            Question question = new Question(country, capital, incorrect, -1);
             question.setId(i);
             questions.add(question);
 
@@ -92,5 +109,21 @@ public class Question {
 
     public String toString() {
         return id + ": " + country + " " + correctCapital + " " + wrongCapitals.get(0) + " " + wrongCapitals.get(1);
+    }
+
+    public void setSelectedIndex(int selectedIndex) {
+        this.selectedIndex = selectedIndex;
+    }
+    public int getSelectedIndex() {
+        return selectedIndex;
+    }
+    public int getCorrectIndex() {
+        return correctIndex;
+    }
+    public List<String> getAnswerChoices() {
+        return answerChoices;
+    }
+    public boolean isCorrect() {
+        return selectedIndex == correctIndex;
     }
 }
