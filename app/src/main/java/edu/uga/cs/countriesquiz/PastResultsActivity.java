@@ -1,9 +1,11 @@
 package edu.uga.cs.countriesquiz;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.annotation.Nullable;
@@ -15,6 +17,8 @@ import java.util.List;
 public class PastResultsActivity extends AppCompatActivity {
 
     private ListView listView;
+    private Button homeButton;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -22,8 +26,14 @@ public class PastResultsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_past_results);
 
         listView = findViewById(R.id.listView);
+        homeButton = findViewById(R.id.button5);
 
         new PastResultsDBReader(this, listView).execute();
+        homeButton.setOnClickListener(v -> {
+            Intent intent = new Intent(PastResultsActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        });
     }
 
     public static class PastResultsDBReader extends AsyncTask<Void, List<Quiz>> {

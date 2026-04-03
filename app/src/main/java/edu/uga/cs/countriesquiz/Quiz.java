@@ -3,12 +3,13 @@ package edu.uga.cs.countriesquiz;
 import android.annotation.SuppressLint;
 import android.util.Log;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Quiz {
+public class Quiz implements Serializable {
     private static final String DEBUG_TAG = "Quiz";
     private long id;
     private LocalDate date;
@@ -73,7 +74,9 @@ public class Quiz {
     public void setDate(LocalDate date) {
         this.date = date;
     }
-
+    public void setScore(int score) {
+        this.score = score;
+    }
     public int getScore() {
         return score;
     }

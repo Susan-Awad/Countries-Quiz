@@ -77,7 +77,7 @@ public class QuestionFragment extends Fragment {
         // get all views from layout
         TextView questionNumberText = view.findViewById(R.id.textView3);
         TextView questionText = view.findViewById(R.id.textView4);
-        TextView scoreText = view.findViewById(R.id.textView6);
+
         RadioGroup radioGroup = view.findViewById(R.id.radioGroup);
         RadioButton answer1Button = view.findViewById(R.id.radioButton);
         RadioButton answer2Button = view.findViewById(R.id.radioButton2);
