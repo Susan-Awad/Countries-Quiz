@@ -162,11 +162,6 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
                     super.onPageSelected(position);
                     Log.d(DEBUG_TAG, "QuizLoader.onPostExecute.onPageSelected: moved to page " + position);
 
-                    // grade question only after the user moves forward to next question
-                    if (position > prevPage && prevPage < questions.size()) {
-                        gradeQuestion(prevPage);
-                    } //if
-
                     // disables swiping at results page
                     if (position == questions.size()) {
                         Fragment fragment = getSupportFragmentManager().findFragmentByTag("f" + position);
@@ -238,8 +233,10 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
 
         if (question.isCorrect()) {
             questionScores[questionIndex] = 1;
+            Log.d(DEBUG_TAG, "onAnswerSelected: answer is correct.");
         } else {
             questionScores[questionIndex] = 0;
+            Log.d(DEBUG_TAG, "onAnswerSelected: answer is false.");
         }
 
         Log.d(DEBUG_TAG, "onAnswerSelected: questionScore[" + questionIndex + "] = " + questionScores[questionIndex]);
@@ -252,20 +249,6 @@ public class QuizActivity extends AppCompatActivity implements QuestionFragment.
         currentQuiz.setScore(currentScore);
         Log.d(DEBUG_TAG, "onAnswerSelected: current score = " + currentScore);
     } //onAnswerSelected
-
-    // grade the question after the user swipes left
-    private void gradeQuestion(int index) {
-        if (questions == null || index >= questions.size() || index < 0) {
-            Log.d(DEBUG_TAG, "gradeQuestion: invalid index: " + index);
-            return;
-        } //if
-
-        // save quiz once the last question is graded
-        if (index == questions.size() - 1 && !isQuizSaved) {
-            saveFinishedQuiz();
-        } //if
-
-    } //gradeQuestion
 
     // triggers async save for the whole quiz
     private void saveFinishedQuiz() {
